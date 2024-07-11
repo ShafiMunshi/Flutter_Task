@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:flutter_task/src/config/style/app_style.dart';
 import 'package:flutter_task/src/controller/home_controller.dart';
 import 'package:flutter_task/src/screen/widgets/global_widget.dart';
 import 'package:flutter_task/src/utils/app_assets.dart';
 import 'package:flutter_task/src/utils/app_color.dart';
-import 'package:flutter_task/src/utils/app_strings.dart';
 import 'package:get/get.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
@@ -25,10 +24,12 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
+      // resizeToAvoidBottomPadding: false,
       body: SafeArea(
           child: Column(
         children: [
-          buildAppBarWidgets(),
+          buildAppbarWidgets(),
           const SizeVer(height: 25),
           buildProfileCardWidgets(),
           const SizeVer(height: 20),
@@ -44,7 +45,7 @@ class HomeScreen extends StatelessWidget {
                           radius: 55.r,
                           lineWidth: 8.0,
                           // arcBackgroundColor: AppColors.grey,
-                          backgroundColor: Color(0xFFF5F5F5),
+                          backgroundColor: const Color(0xFFF5F5F5),
                           percent: con.getDifferencePercentage() / 100,
                           startAngle: 180,
                           center: SemiBoldTextWidget(
@@ -60,8 +61,8 @@ class HomeScreen extends StatelessWidget {
                               ]),
                         );
                       }),
-                  SizeVer(height: 10),
-                  SemiBoldTextWidget(
+                  const SizeVer(height: 10),
+                  const SemiBoldTextWidget(
                     text: "সময় অতিবাহিত",
                     size: 16,
                   )
@@ -72,27 +73,27 @@ class HomeScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  SemiBoldTextWidget(
+                  const SemiBoldTextWidget(
                     text: "মেয়াদকাল",
                     size: 16,
                   ),
                   Row(
                     children: [
                       SvgPicture.asset(AppAssets.calendar, height: 15),
-                      SizeHor(width: 4),
-                      SemiBoldTextWidget(
+                      const SizeHor(width: 4),
+                      const SemiBoldTextWidget(
                         text: "১ই জানুয়ারি ২০২৪ - ৩১ই জানুয়ারি ২০৩০",
                         weight: FontWeight.w500,
                         size: 12,
                       ),
                     ],
                   ),
-                  SizeVer(height: 10),
-                  SemiBoldTextWidget(
+                  const SizeVer(height: 10),
+                  const SemiBoldTextWidget(
                     text: "আরও বাকি",
                     color: AppColors.red,
                   ),
-                  SizeVer(height: 6),
+                  const SizeVer(height: 6),
                   GetBuilder<HomeController>(builder: (con) {
                     return Row(
                       children: [
@@ -106,11 +107,11 @@ class HomeScreen extends StatelessWidget {
                                     con.getRemainingDaysString()[1]),
                               ],
                             ),
-                            SizeVer(height: 6),
-                            SemiBoldTextWidget(text: "বছর")
+                            const SizeVer(height: 6),
+                            const SemiBoldTextWidget(text: "বছর")
                           ],
                         ),
-                        SizeHor(width: 20),
+                        const SizeHor(width: 20),
                         Column(
                           children: [
                             Row(
@@ -121,11 +122,11 @@ class HomeScreen extends StatelessWidget {
                                     con.getRemainingDaysString()[3]),
                               ],
                             ),
-                            SizeVer(height: 6),
-                            SemiBoldTextWidget(text: "মাস")
+                            const SizeVer(height: 6),
+                            const SemiBoldTextWidget(text: "মাস")
                           ],
                         ),
-                        SizeHor(width: 20),
+                        const SizeHor(width: 20),
                         Column(
                           children: [
                             Row(
@@ -136,8 +137,8 @@ class HomeScreen extends StatelessWidget {
                                     con.getRemainingDaysString()[5]),
                               ],
                             ),
-                            SizeVer(height: 6),
-                            SemiBoldTextWidget(text: "দিন")
+                            const SizeVer(height: 6),
+                            const SemiBoldTextWidget(text: "দিন")
                           ],
                         ),
                       ],
@@ -147,10 +148,10 @@ class HomeScreen extends StatelessWidget {
               )
             ],
           ),
-          SizeVer(height: 15),
+          const SizeVer(height: 15),
           Expanded(
             child: GridView.builder(
-              gridDelegate:  SliverGridDelegateWithFixedCrossAxisCount(
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   childAspectRatio: 8 / 11,
                   crossAxisCount: 3,
                   mainAxisSpacing: 20.h,
@@ -172,12 +173,12 @@ class HomeScreen extends StatelessWidget {
                       alignment: Alignment.center,
                       child: SvgPicture.asset(iconList[index]),
                     ),
-                    SemiBoldTextWidget(
+                    const SemiBoldTextWidget(
                       text: "মেনু নং",
                       size: 16,
                     ),
                     SemiBoldTextWidget(
-                      text: convertToBengali("0000${index + 1}"),
+                      text: convertNumsToBengali("0000${index + 1}"),
                       size: 16,
                     ),
                   ],
@@ -186,7 +187,31 @@ class HomeScreen extends StatelessWidget {
             ),
           ),
         ],
-      ).paddingSymmetric(horizontal: 21.w)),
+      ).paddingSymmetric(horizontal: 21.w, vertical: 5.h)),
+    );
+  }
+
+  Row buildAppbarWidgets() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Row(
+          children: [
+            IconButton(onPressed: () {}, icon: const Icon(Icons.menu)),
+            const SizeHor(width: 5),
+            Image.asset(AppAssets.demoImg),
+            const SizeHor(width: 7),
+            Text(
+              "Flutter Task",
+              style: TextStyle(
+                  fontFamily: 'Arial',
+                  fontSize: 16.sp,
+                  fontWeight: FontWeight.w700),
+            ),
+          ],
+        ),
+        SvgPicture.asset(AppAssets.notification)
+      ],
     );
   }
 
@@ -212,13 +237,7 @@ class HomeScreen extends StatelessWidget {
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10.r),
           color: AppColors.white,
-          boxShadow: [
-            BoxShadow(
-                color: Colors.black.withOpacity(.1),
-                blurRadius: 6,
-                blurStyle: BlurStyle.outer,
-                spreadRadius: 2)
-          ]),
+          boxShadow: [appBoxShadow]),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -254,30 +273,6 @@ class HomeScreen extends StatelessWidget {
           ),
         ],
       ),
-    );
-  }
-
-  Row buildAppBarWidgets() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Row(
-          children: [
-            const Icon(Icons.menu),
-            const SizeHor(width: 16),
-            Image.asset(AppAssets.demoImg),
-            const SizeHor(width: 14),
-            Text(
-              "Flutter Task",
-              style: TextStyle(
-                  fontFamily: 'Arial',
-                  fontSize: 16.sp,
-                  fontWeight: FontWeight.w700),
-            )
-          ],
-        ),
-        SvgPicture.asset(AppAssets.notification)
-      ],
     );
   }
 }

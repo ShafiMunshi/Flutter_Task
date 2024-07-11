@@ -5,7 +5,9 @@ ThemeData myThemeData(){
   return ThemeData(
     fontFamily: 'NotoSerif',
     primaryColor: AppColors.primaryClr,
-    scaffoldBackgroundColor: AppColors.white
+    scaffoldBackgroundColor: AppColors.white,
+    useMaterial3: true
+    
 
 
   );

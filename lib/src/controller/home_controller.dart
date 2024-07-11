@@ -1,3 +1,4 @@
+import 'package:flutter_task/src/screen/widgets/global_widget.dart';
 import 'package:flutter_task/src/service/custom_logger.dart';
 import 'package:get/get.dart';
 
@@ -28,17 +29,18 @@ class HomeController extends GetxController {
 
     int passedYear = (passedDays / 365).floor();
     if (passedYear > 0) {
-      data += "${convertToBengali(passedYear.toString())} বছর ";
-      passedDays = passedDays % 365;
+      data += "${convertNumsToBengali(passedYear.toString())} বছর ";
+      passedDays = passedDays - (passedYear * 365);
     }
 
     int passedMonth = (passedDays / 30).floor();
     if (passedMonth > 0) {
-      data += "${convertToBengali(passedMonth.toString())} মাস ";
-      passedDays = passedDays % 30;
+      data += "${convertNumsToBengali(passedMonth.toString())} মাস ";
+      // passedDays = passedDays % 30;
+      passedDays = passedDays - (passedMonth * 30);
     }
 
-    data += "${convertToBengali(passedDays.toString())} দিন";
+    data += "${convertNumsToBengali(passedDays.toString())} দিন";
 
     return data;
   }
@@ -53,9 +55,9 @@ class HomeController extends GetxController {
     int passedYear = (remainingDays / 365).floor();
     if (passedYear > 0) {
       if (passedYear > 9) {
-        data += "${convertToBengali(passedYear.toString())}";
+        data += "${convertNumsToBengali(passedYear.toString())}";
       } else {
-        data += "০${convertToBengali(passedYear.toString())}";
+        data += "০${convertNumsToBengali(passedYear.toString())}";
       }
       remainingDays = remainingDays % 365;
     }
@@ -63,28 +65,19 @@ class HomeController extends GetxController {
     int passedMonth = (remainingDays / 30).floor();
     if (passedMonth > 0) {
       if (passedMonth > 9) {
-        data += "${convertToBengali(passedMonth.toString())}";
+        data += "${convertNumsToBengali(passedMonth.toString())}";
       } else {
-        data += "০${convertToBengali(passedMonth.toString())}";
+        data += "০${convertNumsToBengali(passedMonth.toString())}";
       }
       remainingDays = remainingDays % 30;
     }
 
     if (passedDays > 9) {
-      data += "${convertToBengali(remainingDays.toString())}";
+      data += "${convertNumsToBengali(remainingDays.toString())}";
     } else {
-      data += "০${convertToBengali(remainingDays.toString())}";
+      data += "০${convertNumsToBengali(remainingDays.toString())}";
     }
 
     return data;
   }
-}
-
-String convertToBengali(String englishNumber) {
-  const bengaliDigits = ['০', '১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯'];
-  final bengaliNumber = englishNumber
-      .split('')
-      .map((digit) => bengaliDigits[int.parse(digit)])
-      .join();
-  return bengaliNumber;
 }

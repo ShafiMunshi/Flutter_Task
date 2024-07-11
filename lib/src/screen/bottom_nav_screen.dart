@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:flutter_task/src/screen/calendar/calendar_screen.dart';
+import 'package:flutter_task/src/screen/calendar/new_entry_screen.dart';
 import 'package:flutter_task/src/screen/home/home_screen.dart';
 import 'package:flutter_task/src/utils/app_color.dart';
+
+import '../config/style/app_style.dart';
 
 class KBottomNavigation extends StatefulWidget {
   const KBottomNavigation({
@@ -23,7 +27,7 @@ class KBottomNavigationState extends State<KBottomNavigation> {
     super.initState();
     pageLists = [
       HomeScreen(),
-      HomeScreen(),
+      CalendarScreen(),
       HomeScreen(),
       HomeScreen(),
     ];
@@ -85,11 +89,7 @@ class KBottomNavigationState extends State<KBottomNavigation> {
             height: 60,
             width: 60,
             decoration: const BoxDecoration(
-                shape: BoxShape.circle,
-                gradient: LinearGradient(
-                    colors: [AppColors.primaryLightClr, AppColors.primaryClr],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight)),
+                shape: BoxShape.circle, gradient: appLinearGradient),
             child: Image.asset(
               'assets/icons/cameraa.png',
               height: 10,
