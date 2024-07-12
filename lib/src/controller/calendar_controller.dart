@@ -10,8 +10,8 @@ import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 class CalendarController extends GetxController {
   String todayDate = '';
   List<DateTime> allWeekendDays = [];
-  final nameWordCounter =45.obs;
-  final sentenceWordCounter =120.obs; 
+  final nameWordCounter = 45.obs;
+  final sentenceWordCounter = 120.obs;
 
   ItemScrollController itemScrollController = ItemScrollController();
 
@@ -71,7 +71,7 @@ class CalendarController extends GetxController {
     }, onSuccess: (response) {
       allQuotes = quotesModelFromJson(response.toString());
 
-      // save the data in catch memory
+      
     }, onError: (error) {
       CustomSnackBar.showCustomErrorToast(message: error.message);
     });

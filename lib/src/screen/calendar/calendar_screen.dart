@@ -179,8 +179,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
                       : const BoxDecoration(),
                   margin: EdgeInsets.symmetric(horizontal: 6.w),
                   child: Column(
-                    // mainAxisSize: MainAxisSize.min,
-                    // crossAxisAlignment: CrossAxisAlignment.center,
+                    
                     children: [
                       LightTextWidget(
                         text:

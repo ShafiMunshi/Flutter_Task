@@ -93,24 +93,7 @@ class BaseClient {
       // 3) return response (api done successfully)
       await onSuccess(response);
 
-      // save & process the cookies here
-
-      // if (response.statusCode == 200) {
-      //   // check if the response cookies is forced to log in again or not
-      //   int? responseDecode = jsonDecode(response.data.toString())['force'];
-
-      //   if (responseDecode != null) {
-      //     // gett.Get.offAllNamed(Routes.SHOP_LOGIN);
-      //   }
-
-      //   // save the cookies
-      //   List<String>? newCookies = response.headers['set-cookie'];
-
-      //   // update the old cookies
-      //   if (newCookies != null) {
-      //     setCookiesList(newCookies);
-      //   }
-      // }
+    
     } on SocketException {
       // No internet connection
       _handleSocketException(url: url, onError: onError);

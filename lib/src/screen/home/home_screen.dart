@@ -95,16 +95,15 @@ class HomeScreen extends StatelessWidget {
                   ),
                   const SizeVer(height: 6),
                   GetBuilder<HomeController>(builder: (con) {
+                    final remainingDay = con.getRemainingDays();
                     return Row(
                       children: [
                         Column(
                           children: [
                             Row(
                               children: [
-                                buildBorderContainer(
-                                    con.getRemainingDaysString()[0]),
-                                buildBorderContainer(
-                                    con.getRemainingDaysString()[1]),
+                                buildBorderContainer(remainingDay[0]),
+                                buildBorderContainer(remainingDay[1]),
                               ],
                             ),
                             const SizeVer(height: 6),
@@ -116,10 +115,8 @@ class HomeScreen extends StatelessWidget {
                           children: [
                             Row(
                               children: [
-                                buildBorderContainer(
-                                    con.getRemainingDaysString()[2]),
-                                buildBorderContainer(
-                                    con.getRemainingDaysString()[3]),
+                                buildBorderContainer(remainingDay[2]),
+                                buildBorderContainer(remainingDay[3]),
                               ],
                             ),
                             const SizeVer(height: 6),
@@ -131,10 +128,8 @@ class HomeScreen extends StatelessWidget {
                           children: [
                             Row(
                               children: [
-                                buildBorderContainer(
-                                    con.getRemainingDaysString()[4]),
-                                buildBorderContainer(
-                                    con.getRemainingDaysString()[5]),
+                                buildBorderContainer(remainingDay[4]),
+                                buildBorderContainer(remainingDay[5]),
                               ],
                             ),
                             const SizeVer(height: 6),

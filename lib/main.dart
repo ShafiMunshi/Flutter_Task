@@ -20,6 +20,10 @@ void main() {
     statusBarIconBrightness: Brightness.dark,
   ));
 
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+  ]);
+
   runApp(const MyApp());
 }
 
@@ -30,7 +34,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     // Get.updateLocale(Locale('bd', 'BD'));
 
-    
     return ScreenUtilInit(
       designSize: const Size(375, 812),
       builder: (context, child) => GetMaterialApp(
