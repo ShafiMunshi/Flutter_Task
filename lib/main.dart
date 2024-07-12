@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_task/languages/translation.dart';
 import 'package:flutter_task/src/bindings/all_bindings.dart';
+import 'package:flutter_task/src/config/extension/string.dart';
 import 'package:flutter_task/src/config/theme/my_theme.dart';
 import 'package:flutter_task/src/routes/route_pages.dart';
 import 'package:flutter_task/src/routes/routes.dart';
@@ -28,6 +29,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Get.updateLocale(Locale('bd', 'BD'));
+
+    
     return ScreenUtilInit(
       designSize: const Size(375, 812),
       builder: (context, child) => GetMaterialApp(

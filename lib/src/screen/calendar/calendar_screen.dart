@@ -21,10 +21,9 @@ class CalendarScreen extends StatefulWidget {
 class _CalendarScreenState extends State<CalendarScreen> {
   @override
   void initState() {
-    // TODO: implement initState
-    super.initState();
-
     Get.lazyPut(() => CalendarController());
+
+    super.initState();
   }
 
   @override
@@ -33,15 +32,18 @@ class _CalendarScreenState extends State<CalendarScreen> {
 
     return Scaffold(
       body: SafeArea(
-        child: GetBuilder<CalendarController>(
-            // init: CalendarController(),
-            builder: (controller) {
+        child: GetBuilder<CalendarController>(builder: (controller) {
           return Column(
             children: [
               CustomAppBar(
                 titleText: "সময়রেখা",
-                leadingIcon:
-                    IconButton(onPressed: () {}, icon: Icon(Icons.menu)),
+                leadingIcon: IconButton(
+                    padding: EdgeInsets.zero,
+                    constraints: const BoxConstraints(),
+                    onPressed: () {},
+                    icon: const Icon(
+                      Icons.menu,
+                    )),
               ),
               const SizeVer(height: 20),
               Row(
@@ -51,25 +53,23 @@ class _CalendarScreenState extends State<CalendarScreen> {
                     text: "আজ, ${controller.todayDate}",
                     size: 16,
                   ),
-                 circularFlatButton(
-                  ontap: (){
+                  circularFlatButton(ontap: () {
                     Get.toNamed(Routes.NEW_ENTRY);
-                  }
-                 )
+                  })
                 ],
               ),
               const SizeVer(height: 20),
               buildWeekDayTimeline(controller),
-              SizeVer(height: 20),
+              const SizeVer(height: 20),
               Container(
                 // height: 300,
-                margin: EdgeInsets.only(top: 2, right: 2, left: 2),
-                padding: EdgeInsets.only(left: 16, right: 16, top: 16),
+                margin: EdgeInsets.only(top: 2.h, right: 2, left: 2),
+                padding: EdgeInsets.only(left: 16.w, right: 16.w, top: 16.h),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(10),
-                      topRight: Radius.circular(10)),
+                      topLeft: Radius.circular(10.r),
+                      topRight: Radius.circular(10.r)),
                   boxShadow: [
                     appBoxShadow,
                     const BoxShadow(color: Colors.white, offset: Offset(3, 9)),
@@ -78,51 +78,66 @@ class _CalendarScreenState extends State<CalendarScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SemiBoldTextWidget(
+                    const SemiBoldTextWidget(
                       text: "আজকের কার্যক্রম",
                       size: 16,
                     ),
-                    SizeVer(height: 20),
+                    const SizeVer(height: 20),
                     SizedBox(
                       height: 350.h,
-                      child: ListView.builder(
-                        itemCount: 3,
-                        shrinkWrap: true,
-                        itemBuilder: (BuildContext context, int index) {
-                          return Container(
-                            margin: EdgeInsets.only(bottom: 15.h),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    LightTextWidget(
-                                      text: "সকাল",
-                                      color: (index + 1) % 2 == 0
-                                          ? AppColors.blue
-                                          : AppColors.kBlackClr,
-                                    ),
-                                    LightTextWidget(
-                                      text: "১১ঃ০০ মিঃ",
-                                      color: (index + 1) % 2 == 0
-                                          ? AppColors.blue
-                                          : AppColors.kBlackClr,
-                                    ),
-                                  ],
-                                ),
-                                BoxDataWidget(
-                                    time: "১১:০০ মি.",
-                                    sentence:
-                                        "সেথায় তোমার কিশোরী বধূটি মাটির প্রদীপ ধরি, তুলসীর মূলে প্রণাম যে আঁকে হয়ত তোমারে স্মরি।",
-                                    tag: "বাক্য",
-                                    locations: "ঢাকা, বাংলাদেশ",
-                                    isEven: (index + 1) % 2 == 0)
-                              ],
-                            ),
-                          );
-                        },
-                      ),
+                      child: GetBuilder<CalendarController>(builder: (con) {
+                        if (con.isDataLoading) {
+                          return const Center(
+                              child: CircularProgressIndicator());
+                        }
+
+                        return ListView.builder(
+                          physics: const BouncingScrollPhysics(),
+                          itemCount: con.allQuotes!.data.length,
+                          shrinkWrap: true,
+                          itemBuilder: (BuildContext context, int index) {
+                            final quotesData = con.allQuotes!.data[index];
+                            final qouteTime =
+                                getActualHourMinuteTime(quotesData.date);
+
+                            final qouteDayTime =
+                                getActualDayTime(quotesData.date);
+
+                            return Container(
+                              margin: EdgeInsets.only(bottom: 15.h),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      LightTextWidget(
+                                        text: qouteDayTime,
+                                        color: (index + 1) % 2 == 0
+                                            ? AppColors.blue
+                                            : AppColors.kBlackClr,
+                                      ),
+                                      LightTextWidget(
+                                        text: qouteTime,
+                                        color: (index + 1) % 2 == 0
+                                            ? AppColors.blue
+                                            : AppColors.kBlackClr,
+                                      ),
+                                    ],
+                                  ),
+                                  BoxDataWidget(
+                                      time: qouteTime,
+                                      sentence: quotesData.name,
+                                      tag: quotesData.category,
+                                      locations: quotesData.location,
+                                      isEven: (index + 1) % 2 == 0)
+                                ],
+                              ),
+                            );
+                          },
+                        );
+                      }),
                     ),
                   ],
                 ),
@@ -234,15 +249,15 @@ class BoxDataWidget extends StatelessWidget {
           Row(
             children: [
               SvgPicture.asset(AppAssets.clock),
-              SizeHor(width: 5),
+              const SizeHor(width: 5),
               BodyTextWidget(text: time),
             ],
           ),
-          SizeHor(width: 10),
+          const SizeHor(width: 10),
           BodyTextWidget(text: sentence),
-          SizeVer(height: 8),
+          const SizeVer(height: 8),
           BodyTextWidget(text: tag),
-          SizeVer(height: 8),
+          const SizeVer(height: 8),
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [

@@ -1,13 +1,17 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
+import 'package:flutter_task/src/config/custom/custom_snacber.dart';
+import 'package:flutter_task/src/data/models/quotes_model.dart';
+import 'package:flutter_task/src/data/remote/dio_call.dart';
 import 'package:flutter_task/src/screen/widgets/global_widget.dart';
+import 'package:flutter_task/src/utils/app_url.dart';
 import 'package:get/get.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 class CalendarController extends GetxController {
   String todayDate = '';
   List<DateTime> allWeekendDays = [];
+  final nameWordCounter =45.obs;
+  final sentenceWordCounter =120.obs; 
 
   ItemScrollController itemScrollController = ItemScrollController();
 
@@ -16,9 +20,8 @@ class CalendarController extends GetxController {
     todayDate = getTodayDateString();
     allWeekendDays = getAllWeekends();
     do_jump();
+    getAllQuotes();
     super.onInit();
-
-    
   }
 
   void do_jump() {
@@ -55,5 +58,54 @@ class CalendarController extends GetxController {
     }
 
     return lists;
+  }
+
+  bool isDataLoading = false;
+  QuotesModel? allQuotes;
+
+  Future<void> getAllQuotes() async {
+    await BaseClient.safeApiCall(AppUrl.api_endpoint, RequestType.get,
+        onLoading: () {
+      isDataLoading = true;
+      update();
+    }, onSuccess: (response) {
+      allQuotes = quotesModelFromJson(response.toString());
+
+      // save the data in catch memory
+    }, onError: (error) {
+      CustomSnackBar.showCustomErrorToast(message: error.message);
+    });
+
+    isDataLoading = false;
+    update();
+  }
+
+  bool isSubmitLoading = false;
+  Future<bool> submitQouteData(
+      {required String name,
+      required String bivag,
+      required DateTime date,
+      required String location,
+      required String fullSentence}) async {
+    // here we can send form data to out api endpoint
+    // for simplicity we will add these data to QoutsModel so that we can show that, to our calendar screen
+
+    isSubmitLoading = true;
+    update();
+
+    await Future.delayed(const Duration(milliseconds: 500), () {
+// Here you can write your code
+
+      allQuotes!.data.insert(
+          0,
+          QutesInfo(
+              date: date, name: name, category: bivag, location: location));
+
+      isSubmitLoading = false;
+      update();
+      return true;
+    });
+
+    return true;
   }
 }

@@ -250,9 +250,6 @@ class BaseClient {
     }
   }
 
-  /// handle error automaticly (if user didnt pass onError) method
-  /// it will try to show the message from api if there is no message
-  /// from api it will show the reason (the dio message)
   static handleApiError(ApiException apiException) {
     String msg = apiException.toString();
     CustomSnackBar.showCustomErrorToast(message: msg);

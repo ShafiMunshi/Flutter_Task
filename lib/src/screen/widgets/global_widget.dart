@@ -44,6 +44,47 @@ String convertWeekDayToBengali(int weekDayNumber) {
   return weekNames[weekDayNumber - 1];
 }
 
+String getActualDayTime(DateTime dateTime) {
+  // adding 6 hours more to check the time is AM or PM
+  DateTime gmtPlus6DateTime = dateTime.toUtc().add(Duration(hours: 6));
+
+  bool isAM = gmtPlus6DateTime.hour < 12;
+
+  if (isAM) {
+    if (dateTime.hour > 5 && dateTime.hour <= 11) {
+      return "সকাল";
+    } else {
+      return "রাত";
+    }
+  } else {
+    if (dateTime.hour == 12 || dateTime.hour < 4) {
+      return "দুপুর";
+    } else {
+      return "রাত";
+    }
+  }
+}
+
+String getActualHourMinuteTime(DateTime dateTime) {
+  String result = '';
+  final hour = convertNumsToBengali(dateTime.hour.toString());
+  result += "${hour}ঃ";
+  if (hour.length == 1) {
+    result = '০$result';
+  }
+
+  final minute = convertNumsToBengali(dateTime.minute.toString());
+
+  if (minute.length == 1) {
+    result += "০${minute}";
+  } else {
+    result += "${minute}";
+  }
+
+  result += " মিঃ";
+  return result;
+}
+
 class SizeVer extends StatelessWidget {
   const SizeVer({super.key, required this.height});
 
@@ -118,18 +159,25 @@ class LightTextWidget extends StatelessWidget {
       {super.key,
       required this.text,
       this.color = AppColors.grey,
+      this.overflow = TextOverflow.ellipsis,
+      this.isCenter = false,
       this.size = 14});
 
   final String text;
   final Color color;
   final int size;
+  final TextOverflow overflow;
+  final bool isCenter;
 
   @override
   Widget build(BuildContext context) {
-    return Text(text,
-        style: TextStyle(
-            fontWeight: FontWeight.w500, fontSize: size.sp, color: color),
-        overflow: TextOverflow.ellipsis);
+    return Text(
+      text,
+      style: TextStyle(
+          fontWeight: FontWeight.w500, fontSize: size.sp, color: color),
+      overflow: overflow,
+      textAlign: isCenter ? TextAlign.center : TextAlign.left,
+    );
   }
 }
 
@@ -146,9 +194,10 @@ class BodyTextWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(text,
-        style: TextStyle(
-            fontWeight: FontWeight.w500, fontSize: size.sp, color: color),
-        );
+    return Text(
+      text,
+      style: TextStyle(
+          fontWeight: FontWeight.w500, fontSize: size.sp, color: color),
+    );
   }
 }

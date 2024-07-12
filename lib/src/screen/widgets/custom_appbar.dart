@@ -24,6 +24,8 @@ class CustomAppBar extends StatelessWidget {
       children: [
         leadingIcon == null
             ? IconButton(
+              
+                padding: EdgeInsets.zero,
                 onPressed: () {
                   Navigator.pop(context);
                 },
