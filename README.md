@@ -163,6 +163,9 @@ I created a template form many coders which really helps me to call http server.
 		    update();
 	    }, onSuccess: (response) {
 		    allQuotes  =  quotesModelFromJson(response.toString());
+
+			// sorting the list data according to most neighbor date
+      		data.sort((a, b) => b.date.compareTo(a.date));
 	   
 	    }, onError: (error) {
 		    CustomSnackBar.showCustomErrorToast(message:  error.message);
@@ -173,4 +176,15 @@ I created a template form many coders which really helps me to call http server.
 This is how Qoutes image list look like
 ![list image](https://lh3.googleusercontent.com/pw/AP1GczOLnqNNT6Eh6qfABCfaJ37LeTNDAz-9_CgY8E_cswwx0eS4iDZhJygSXhXFCxpxoGKUjS22Np2u2zhxNY84YYZpDHmx9HaHeaJuMDhk4fH0IVxYKfvVEUqN1WPG7DY5fmHPuIfomr1TpEbcr3qSePBTWQ=w864-h332-s-no-gm?authuser=0)
 
+
+## New Data Entry Screen
+![Image screen shot](https://lh3.googleusercontent.com/pw/AP1GczOBI51VRuYlR8CkNb79WWsfvom03bOzq5JGI828UzrIb9S-J4712n0XqLi-tCgrW97T-rD9YF2F6ahMBqqkwgVfBKd1v_fcNZvVLV2QTJkvu3yThlSydPypMKX0rUg2bfnm-rsPrnTVmFyI0Pf_fvkfjQ=w437-h971-s-no-gm?authuser=0)
+**Screen Functionality:**
+
+ - change word count when user type 
+ - show the date-time in bengali 
+ - language Handle Error Validation TextField & DropDown button
+
+ ### Click to save into the all Sentence in Descending Order of Date-Time
+ 
 

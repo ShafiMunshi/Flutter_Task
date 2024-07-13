@@ -71,7 +71,8 @@ class CalendarController extends GetxController {
     }, onSuccess: (response) {
       allQuotes = quotesModelFromJson(response.toString());
 
-      
+      // sorting the list data according to most neighbor date
+      allQuotes!.data.sort((a, b) => b.date.compareTo(a.date));
     }, onError: (error) {
       CustomSnackBar.showCustomErrorToast(message: error.message);
     });
@@ -107,5 +108,17 @@ class CalendarController extends GetxController {
     });
 
     return true;
+  }
+
+  void changeNameWordCount(String val) {
+    if (val.length <= 45) {
+      nameWordCounter.value = (45 - val.length);
+    }
+  }
+
+  void changeSentenceWordCount(String val) {
+    if (val.length <= 120) {
+      sentenceWordCounter.value = (120 - val.length);
+    }
   }
 }

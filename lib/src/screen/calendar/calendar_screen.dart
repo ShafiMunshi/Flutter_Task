@@ -31,6 +31,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
     // Get.put(CalendarController());
 
     return Scaffold(
+      resizeToAvoidBottomInset:  false,
       body: SafeArea(
         child: GetBuilder<CalendarController>(builder: (controller) {
           return Column(
@@ -102,6 +103,8 @@ class _CalendarScreenState extends State<CalendarScreen> {
 
                             final qouteDayTime =
                                 getActualDayTime(quotesData.date);
+
+                            print(quotesData.date.day);
 
                             return Container(
                               margin: EdgeInsets.only(bottom: 15.h),

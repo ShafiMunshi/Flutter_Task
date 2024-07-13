@@ -51,6 +51,8 @@ class _NewEntryScreenState extends State<NewEntryScreen> {
     sentenceController.dispose();
     dateTimeController.dispose();
     fullDataController.dispose();
+
+    updateWordCounterValue();
     super.dispose();
   }
 
@@ -75,14 +77,16 @@ class _NewEntryScreenState extends State<NewEntryScreen> {
                   children: [
                     const CustomAppBar(titleText: "নতুন যোগ করুন"),
                     const SizeVer(height: 20),
-                    const Row(
+                    Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         BoldTextWidget(
                           text: "অনুচ্ছেদ",
                           size: 16,
                         ),
-                        LightTextWidget(text: "৪৫ শব্দ"),
+                        Obx(() => LightTextWidget(
+                            text:
+                                "${convertNumsToBengali(controller.nameWordCounter.value.toString())} শব্দ")),
                       ],
                     ),
                     const SizedBox(
@@ -90,8 +94,11 @@ class _NewEntryScreenState extends State<NewEntryScreen> {
                     ),
                     FormField(
                       controller: nameController,
+                      onChanged: (val) {
+                        controller.changeNameWordCount(val);
+                      },
                       hintText: "অনুচ্ছেদ লিখুন",
-                      maximumWords: 42,
+                      maximumWords: 45,
                       validator: (val) {
                         if (val!.trim().isEmpty) {
                           return "It's empty";
@@ -186,7 +193,7 @@ class _NewEntryScreenState extends State<NewEntryScreen> {
                                     hour: int.parse(
                                       formattedTime.substring(0, 2),
                                     ),
-                                    minute:  int.parse(
+                                    minute: int.parse(
                                       formattedTime.substring(3, 5),
                                     ));
 
@@ -200,7 +207,7 @@ class _NewEntryScreenState extends State<NewEntryScreen> {
                                 final hour = convertNumsToBengali(
                                     formattedTime.substring(0, 2)); // 07:43
                                 final min = convertNumsToBengali(
-                                   formattedTime.substring(3, 5));
+                                    formattedTime.substring(3, 5));
 
                                 finalSelectedDate = selectedDateTime;
 
@@ -238,14 +245,16 @@ class _NewEntryScreenState extends State<NewEntryScreen> {
                       },
                     ),
                     const SizeVer(height: 20),
-                    const Row(
+                    Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         BoldTextWidget(
                           text: "অনুচ্ছেদের বিবরণ",
                           size: 16,
                         ),
-                        LightTextWidget(text: "১২০ শব্দ"),
+                        Obx(() => LightTextWidget(
+                            text:
+                                "${convertNumsToBengali(controller.sentenceWordCounter.value.toString())} শব্দ")),
                       ],
                     ),
                     const SizedBox(
@@ -253,6 +262,9 @@ class _NewEntryScreenState extends State<NewEntryScreen> {
                     ),
                     FormField(
                       controller: fullDataController,
+                      onChanged: (val) {
+                        controller.changeSentenceWordCount(val);
+                      },
                       validator: (val) {
                         if (val!.trim().isEmpty) {
                           return "It's empty";
@@ -349,7 +361,15 @@ class _NewEntryScreenState extends State<NewEntryScreen> {
       // dateTimeController.;
       selectedBivag = null;
       selectedPlcae = null;
+
+      updateWordCounterValue();
     });
+  }
+
+  void updateWordCounterValue() {
+    var controller = Get.find<CalendarController>();
+    controller.nameWordCounter.value = 45;
+    controller.sentenceWordCounter.value = 120;
   }
 
   Container dropDownFieldWidget(
@@ -437,6 +457,7 @@ class FormField extends StatelessWidget {
       required this.maximumWords,
       this.maxLines = 1,
       this.onTap,
+      this.onChanged,
       this.validator,
       this.leadingIcon});
 
@@ -447,11 +468,13 @@ class FormField extends StatelessWidget {
   final Widget? leadingIcon;
   final int maxLines;
   final String? Function(String?)? validator;
+  final void Function(String)? onChanged;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       onTap: onTap,
+      onChanged: onChanged,
       validator: validator,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       readOnly: onTap != null,

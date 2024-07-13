@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_task/src/screen/calendar/calendar_screen.dart';
-import 'package:flutter_task/src/screen/calendar/new_entry_screen.dart';
 import 'package:flutter_task/src/screen/home/home_screen.dart';
 import 'package:flutter_task/src/utils/app_color.dart';
 
@@ -74,6 +73,7 @@ class KBottomNavigationState extends State<KBottomNavigation> {
 
     return Scaffold(
       // backgroundColor: AppColors.scaffollDarkColor,
+      resizeToAvoidBottomInset: false,
       body: pageLists[isSelected],
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
