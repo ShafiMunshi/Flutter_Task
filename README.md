@@ -1,5 +1,8 @@
 # Project Summary
-This is an assignment project from SoftBd
+This is an assignment project from SoftBd 
+
+Install the sample application...
+[Click here to download the app](https://drive.google.com/file/d/1x27KhtnBQIhSBLQ-0GVOHjAsabBuzbL9/view?usp=sharing)
 
 ## Packages I used: 
 |package name| reason to use   
@@ -12,7 +15,7 @@ This is an assignment project from SoftBd
 |[intl](https://pub.dev/packages/intl)|date-time management
 |[flutter_svg](https://pub.dev/packages/flutter_svg)|showing svg in  apps
 |[scrollable_positioned_list](https://pub.dev/packages/scrollable_positioned_list)|to use jump to today's date in scrollable listview (2nd screen )
-||
+
 
 ## Coding design Pattern
 Coding desgin pattern are used to separate all the business logic from UI and divide their works. for simplicity, I followed **MVC** ( Model-View-Controller) pattern. It's too easy and fun to work with it.  It divide all the logic into 3 parts 
@@ -60,7 +63,10 @@ please, have a look on this [custom function code](https://github.com/ShafiMunsh
     }
     
     //it will return =>  ৬ মাস ১৪ দিন 
+
+    
 **Calculated Total time remains from Today to 31 December, 2030:**
+
 for acquirate remaining days calculation we have consider the leap year, 
 day count of a year = 365 days
 but a leap year = 366 days, and this year comes after every 4 years. 
@@ -123,6 +129,10 @@ So, the approximate days of every year is = 365 + ( 1 / 4 ) = 365.25
 ##  Calendar Screen Functionality
 
 At first talking about this scrollable list of date 
+
+To make this happen, I simply jump to index number 4 of List<DateTime> allWeekDays.
+
+That's why the list assume it first index is equal to 4th index of **allWeekDays** list. So, the current date will stay in the center of that list
 ![scrollable date list ](https://lh3.googleusercontent.com/pw/AP1GczPMB2i1eW_qeeYk2nE9_MhZqpMB7pFg5_-gJKHUf88Z-Vwmfx2llIQF5JJKQhu7NCW-Wi_h2EM5JJgWpj4B7JgqbCtLbRy9eHLvaeSwwW02XE3L1BR3eaqO0Nkvai4X3SMA3h6wLzLtuZ4Gq1mrC-uxgw=w864-h394-s-no-gm?authuser=0)
 
  **generate previous 7 days and future 7 days function**
@@ -159,19 +169,19 @@ I created a template form many coders which really helps me to call http server.
     Future<void> getAllQuotes() async {
 	    await  BaseClient.safeApiCall(AppUrl.api_endpoint, RequestType.get,
 	    onLoading: () {
-		    isDataLoading  =  true;
-		    update();
+		isDataLoading  =  true;
+		update();
 	    }, onSuccess: (response) {
-		    allQuotes  =  quotesModelFromJson(response.toString());
-
-			// sorting the list data according to most neighbor date
+		allQuotes  =  quotesModelFromJson(response.toString());
+      
+		// sorting the list data according to most neighbor date
       		data.sort((a, b) => b.date.compareTo(a.date));
 	   
 	    }, onError: (error) {
-		    CustomSnackBar.showCustomErrorToast(message:  error.message);
+		CustomSnackBar.showCustomErrorToast(message:  error.message);
 	    });
-	    isDataLoading  =  false;
-	    update();
+	isDataLoading  =  false;
+	update();
     }
 This is how Qoutes image list look like
 ![list image](https://lh3.googleusercontent.com/pw/AP1GczOLnqNNT6Eh6qfABCfaJ37LeTNDAz-9_CgY8E_cswwx0eS4iDZhJygSXhXFCxpxoGKUjS22Np2u2zhxNY84YYZpDHmx9HaHeaJuMDhk4fH0IVxYKfvVEUqN1WPG7DY5fmHPuIfomr1TpEbcr3qSePBTWQ=w864-h332-s-no-gm?authuser=0)
@@ -187,4 +197,8 @@ This is how Qoutes image list look like
 
  ### Click to save into the all Sentence in Descending Order of Date-Time
  
+
+https://github.com/user-attachments/assets/bc0934c3-e68e-49c2-954f-405144e1f894
+
+
 
