@@ -65,7 +65,7 @@ please, have a look on this [custom function code](https://github.com/ShafiMunsh
     //it will return =>  ৬ মাস ১৪ দিন 
 
     
-**Calculated Total time remains from Today to 31 December, 2030:**
+**Calculated Total time remains from Today to 31 January, 2030:**
 
 for acquirate remaining days calculation we have consider the leap year, 
 day count of a year = 365 days
