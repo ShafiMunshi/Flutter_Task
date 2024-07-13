@@ -19,9 +19,13 @@ Install the sample application...
 
 ## Coding design Pattern
 Coding desgin pattern are used to separate all the business logic from UI and divide their works. for simplicity, I followed **MVC** ( Model-View-Controller) pattern. It's too easy and fun to work with it.  It divide all the logic into 3 parts 
+
  **Model** -> it works as middle man between database and UI. database could be a remote server or local server. 
+ 
  **View** -> It holds only application user interface part.
+ 
  **Controller** -> it holds all the functionality and the logic. It makes a surrounding connection with UI and Model. all functional works done here.
+ 
  ![Screenshot](https://lh3.googleusercontent.com/pw/AP1GczObcK30PVxSzIhktzJrPGpcb-FumPKsUVec0iPm6y9rY5zhmTYDRov3ccnANjtnta61Y5ZJpCESM-slfajPq_zQ4dYuP3wxfHM67nzHCmMhCORmLLwlHbJzoxCCduBxq8nUZGMOi4-WCRTSq2oIHastCA=w300-h470-s-no-gm)
 
 
@@ -38,7 +42,8 @@ I didn't use any Localization or pub packages to convert the Date and Time into 
  2.  english month to bengali month  (জানুয়ারি, ফেব্রুয়ারি..)
  3.  english week-day to bengali week-day ( শনি, রবি, সোম ..)
  4. get actual Day-break time ( সকাল, বিকাল, রাত)
-please, have a look on this [custom function code](https://github.com/ShafiMunshi/Flutter_Task/blob/main/lib/src/screen/widgets/global_widget.dart) , 
+
+please, have a look on this [custom bengali lang. converter function code](https://github.com/ShafiMunshi/Flutter_Task/blob/main/lib/src/screen/widgets/global_widget.dart) , 
 
 **Calculated Total time passed from 01 January,2024 to Today:**
 
