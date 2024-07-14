@@ -1,8 +1,6 @@
 # Project Summary
 This is an assignment project from SoftBd 
 
-Install the sample application...
-[Click here to download the app](https://drive.google.com/file/d/1x27KhtnBQIhSBLQ-0GVOHjAsabBuzbL9/view?usp=sharing)
 
 ## Packages I used: 
 |package name| reason to use   
