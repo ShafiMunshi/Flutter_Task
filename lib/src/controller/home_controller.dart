@@ -14,6 +14,7 @@ class HomeController extends GetxController {
 
     // calculate all date
     getDifferencePercentage();
+    getPassedDaysString();
   }
 
   double getDifferencePercentage() {
