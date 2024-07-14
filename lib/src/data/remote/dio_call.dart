@@ -95,12 +95,16 @@ class BaseClient {
 
     
     } on SocketException {
+
+      print("no internet connection");
       // No internet connection
       _handleSocketException(url: url, onError: onError);
-    } on DioException catch (error) {
+    } 
+    on DioException catch (error) {
       // dio error (api reach the server but not performed successfully
       _handleDioError(error: error, url: url, onError: onError);
-    } on TimeoutException {
+    } 
+    on TimeoutException {
       // Api call went out of time
       _handleTimeoutException(url: url, onError: onError);
     } catch (error, stackTrace) {
@@ -165,14 +169,14 @@ class BaseClient {
   /// handle timeout exception
   static _handleSocketException(
       {Function(ApiException)? onError, required String url}) {
-    if (onError != null) {
-      onError(ApiException(
-        message: AppStrings.noInternetConnection,
-        url: url,
-      ));
-    } else {
+    // if (onError != null) {
+    //   onError(ApiException(
+    //     message: AppStrings.noInternetConnection,
+    //     url: url,
+    //   ));
+    // } else {
       _handleError(AppStrings.noInternetConnection);
-    }
+    // }
   }
 
   /// handle Dio error

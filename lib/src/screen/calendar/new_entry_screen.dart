@@ -51,6 +51,7 @@ class _NewEntryScreenState extends State<NewEntryScreen> {
     fullDataController.dispose();
 
     updateWordCounterValue();
+    
     super.dispose();
   }
 

@@ -31,7 +31,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
     // Get.put(CalendarController());
 
     return Scaffold(
-      resizeToAvoidBottomInset:  false,
+      resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: GetBuilder<CalendarController>(builder: (controller) {
           return Column(
@@ -86,10 +86,17 @@ class _CalendarScreenState extends State<CalendarScreen> {
                     const SizeVer(height: 20),
                     SizedBox(
                       height: 350.h,
-                      child: GetBuilder<CalendarController>(builder: (con) {
+                      child: GetBuilder<CalendarController>(
+                        id: 'lists',
+                        builder: (con) {
                         if (con.isDataLoading) {
                           return const Center(
                               child: CircularProgressIndicator());
+                        }
+
+                        if (con.allQuotes?.data == null) {
+                          return Center(
+                              child: SemiBoldTextWidget(text: "কোনো তথ্য নেই"));
                         }
 
                         return ListView.builder(
@@ -182,7 +189,6 @@ class _CalendarScreenState extends State<CalendarScreen> {
                       : const BoxDecoration(),
                   margin: EdgeInsets.symmetric(horizontal: 6.w),
                   child: Column(
-                    
                     children: [
                       LightTextWidget(
                         text:

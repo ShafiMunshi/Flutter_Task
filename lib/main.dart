@@ -43,7 +43,6 @@ class MyApp extends StatelessWidget {
         fallbackLocale: Locale('en', 'US'),
         translations: Languages(),
         initialBinding: MyPageBinding(),
-
         initialRoute: Routes.HOME,
         getPages: AppPages.pages,
         // home: HomeScreen(),

@@ -67,18 +67,18 @@ class CalendarController extends GetxController {
     await BaseClient.safeApiCall(AppUrl.api_endpoint, RequestType.get,
         onLoading: () {
       isDataLoading = true;
-      update();
+      update(['lists']);
     }, onSuccess: (response) {
       allQuotes = quotesModelFromJson(response.toString());
 
       // sorting the list data according to most neighbor date
       allQuotes!.data.sort((a, b) => b.date.compareTo(a.date));
     }, onError: (error) {
-      CustomSnackBar.showCustomErrorToast(message: error.message);
+      // CustomSnackBar.showCustomErrorToast(message: error.message);
     });
 
     isDataLoading = false;
-    update();
+    update(['lists']);
   }
 
   bool isSubmitLoading = false;
@@ -97,13 +97,14 @@ class CalendarController extends GetxController {
     await Future.delayed(const Duration(milliseconds: 500), () {
 // Here you can write your code
 
-      allQuotes!.data.insert(
+      allQuotes?.data.insert(
           0,
           QutesInfo(
               date: date, name: name, category: bivag, location: location));
 
       isSubmitLoading = false;
       update();
+      update(['lists']);
       return true;
     });
 
