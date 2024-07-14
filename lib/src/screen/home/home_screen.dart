@@ -9,8 +9,21 @@ import 'package:flutter_task/src/utils/app_color.dart';
 import 'package:get/get.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  late HomeController controller;
+  @override
+  void initState() {
+    controller = Get.find<HomeController>();
+    controller.getPassedDaysString();
+    super.initState();
+  }
 
   final iconList = [
     AppAssets.people,
@@ -23,9 +36,11 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final remainingDay = controller.getRemainingDays();
+    print(controller.passedDaysStr);
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      // resizeToAvoidBottomPadding: false,
       body: SafeArea(
           child: Column(
         children: [
@@ -38,29 +53,32 @@ class HomeScreen extends StatelessWidget {
             children: [
               Column(
                 children: [
-                  GetBuilder(
-                      init: HomeController(),
-                      builder: (con) {
-                        return CircularPercentIndicator(
-                          radius: 55.r,
-                          lineWidth: 8.0,
-                          // arcBackgroundColor: AppColors.grey,
-                          backgroundColor: const Color(0xFFF5F5F5),
-                          percent: con.getDifferencePercentage() / 100,
-                          startAngle: 180,
-                          center: SemiBoldTextWidget(
-                            text: con.getPassedDaysString(),
-                            size: 14,
-                          ),
-                          linearGradient: const LinearGradient(
-                              begin: Alignment.topRight,
-                              end: Alignment.bottomLeft,
-                              colors: <Color>[
-                                AppColors.primaryLightClr,
-                                AppColors.primaryClr
-                              ]),
-                        );
-                      }),
+                  GetBuilder<HomeController>(builder: (con) {
+                    if (con.isLoading) {
+                      return Center(child: CircularProgressIndicator());
+                    }
+
+                    return CircularPercentIndicator(
+                      radius: 55.r,
+                      lineWidth: 8.0,
+                      // arcBackgroundColor: AppColors.grey,
+                      backgroundColor: const Color(0xFFF5F5F5),
+                      percent: con.getDifferencePercentage() / 100,
+                      startAngle: 180,
+
+                      center: SemiBoldTextWidget(
+                        text: con.passedDaysStr ?? '.......',
+                        size: 14,
+                      ),
+                      linearGradient: const LinearGradient(
+                          begin: Alignment.topRight,
+                          end: Alignment.bottomLeft,
+                          colors: <Color>[
+                            AppColors.primaryLightClr,
+                            AppColors.primaryClr
+                          ]),
+                    );
+                  }),
                   const SizeVer(height: 10),
                   const SemiBoldTextWidget(
                     text: "সময় অতিবাহিত",
@@ -94,51 +112,48 @@ class HomeScreen extends StatelessWidget {
                     color: AppColors.red,
                   ),
                   const SizeVer(height: 6),
-                  GetBuilder<HomeController>(builder: (con) {
-                    final remainingDay = con.getRemainingDays();
-                    return Row(
-                      children: [
-                        Column(
-                          children: [
-                            Row(
-                              children: [
-                                buildBorderContainer(remainingDay[0]),
-                                buildBorderContainer(remainingDay[1]),
-                              ],
-                            ),
-                            const SizeVer(height: 6),
-                            const SemiBoldTextWidget(text: "বছর")
-                          ],
-                        ),
-                        const SizeHor(width: 20),
-                        Column(
-                          children: [
-                            Row(
-                              children: [
-                                buildBorderContainer(remainingDay[2]),
-                                buildBorderContainer(remainingDay[3]),
-                              ],
-                            ),
-                            const SizeVer(height: 6),
-                            const SemiBoldTextWidget(text: "মাস")
-                          ],
-                        ),
-                        const SizeHor(width: 20),
-                        Column(
-                          children: [
-                            Row(
-                              children: [
-                                buildBorderContainer(remainingDay[4]),
-                                buildBorderContainer(remainingDay[5]),
-                              ],
-                            ),
-                            const SizeVer(height: 6),
-                            const SemiBoldTextWidget(text: "দিন")
-                          ],
-                        ),
-                      ],
-                    );
-                  })
+                  Row(
+                    children: [
+                      Column(
+                        children: [
+                          Row(
+                            children: [
+                              buildBorderContainer(remainingDay[0]),
+                              buildBorderContainer(remainingDay[1]),
+                            ],
+                          ),
+                          const SizeVer(height: 6),
+                          const SemiBoldTextWidget(text: "বছর")
+                        ],
+                      ),
+                      const SizeHor(width: 20),
+                      Column(
+                        children: [
+                          Row(
+                            children: [
+                              buildBorderContainer(remainingDay[2]),
+                              buildBorderContainer(remainingDay[3]),
+                            ],
+                          ),
+                          const SizeVer(height: 6),
+                          const SemiBoldTextWidget(text: "মাস")
+                        ],
+                      ),
+                      const SizeHor(width: 20),
+                      Column(
+                        children: [
+                          Row(
+                            children: [
+                              buildBorderContainer(remainingDay[4]),
+                              buildBorderContainer(remainingDay[5]),
+                            ],
+                          ),
+                          const SizeVer(height: 6),
+                          const SemiBoldTextWidget(text: "দিন")
+                        ],
+                      ),
+                    ],
+                  )
                 ],
               )
             ],

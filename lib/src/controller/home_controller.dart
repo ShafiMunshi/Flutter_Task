@@ -7,14 +7,24 @@ class HomeController extends GetxController {
   final lastDate = DateTime(2030, 1, 31);
   final firstDate = DateTime(2024, 1, 1);
   final today = DateTime.now();
+  String? passedDaysStr;
 
   @override
   void onInit() {
+    getInitialData();
     super.onInit();
+  }
+
+  void getInitialData() {
+    isLoading = true;
+    update();
 
     // calculate all date
-    getDifferencePercentage();
     getPassedDaysString();
+    getDifferencePercentage();
+
+    isLoading = false;
+    update();
   }
 
   double getDifferencePercentage() {
@@ -24,7 +34,12 @@ class HomeController extends GetxController {
     return totalDays / passedDays;
   }
 
-  String getPassedDaysString() {
+  bool isLoading = false;
+
+  void getPassedDaysString() {
+    // isLoading = true;
+    // update(['home']);
+
     String data = '';
     int passedDays =
         today.difference(firstDate).inDays; // get total passed days from
@@ -44,7 +59,12 @@ class HomeController extends GetxController {
 
     data += "${convertNumsToBengali(passedDays.toString())} দিন";
 
-    return data;
+    passedDaysStr = data;
+
+    print(passedDays);
+
+    // isLoading = false;
+    // update(['home']);
   }
 
   String getRemainingDays() {
